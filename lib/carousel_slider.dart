@@ -12,6 +12,7 @@ class CarouselSlider extends StatefulWidget {
     this.aspectRatio: 16 / 9,
     this.viewportFraction: 0.8,
     this.initialPage: 0,
+    this.physics,
     this.realPage: 10000,
     this.reverse: false,
     this.autoPlay: false,
@@ -180,7 +181,10 @@ class CarouselSlider extends StatefulWidget {
     return pageController.animateToPage(pageController.page.toInt() + page - index,
         duration: duration, curve: curve);
   }
-
+  
+  /// Creates an object with the default scroll physics.
+  final ScrollPhysics physics;
+  
   @override
   _CarouselSliderState createState() => _CarouselSliderState();
 }
@@ -238,6 +242,7 @@ class _CarouselSliderState extends State<CarouselSlider> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return getWrapper(PageView.builder(
+      physics: widget.physics,
       scrollDirection: widget.scrollDirection,
       onPageChanged: (int index) {
         currentPage = _getRealIndex(index, widget.realPage, widget.items.length);
